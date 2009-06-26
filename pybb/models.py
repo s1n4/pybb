@@ -328,16 +328,18 @@ class PrivateMessage(RenderableItem):
         super(PrivateMessage, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return  reverse('pybb_show_pm', args=[self.id])
+        return reverse('pybb_pm_show_message', args=[self.id])
 
 
 class MessageBox(models.Model):
     """
     Each private message may belong to one or more message boxes.
+
     This m2m relationship also defines which message is first
         in any given message thread (first message has head=True)
         and if the thread has unread messages (thread_read)
     """
+
     message = models.ForeignKey(PrivateMessage)
     user = models.ForeignKey(User)
 
