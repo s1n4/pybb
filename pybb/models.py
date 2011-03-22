@@ -223,13 +223,8 @@ class Post(RenderableItem):
         return reverse('pybb_post_details', args=[self.id])
 
     def delete(self, *args, **kwargs):
-        self_id = self.pk
-        head_post_id = self.topic.posts.order_by('created')[0].id
-        last_posts = list(self.topic.posts.order_by('-created')[:2])
-        last_post_id = self.topic.get_last_post().id
-
         # Change `last_post` of the forum which the deleted post belongs to
-        # This needs to avaid forum deletion
+        # This needs to avaid whole forum deletion due to ForeignKey dependency
         forum = self.topic.forum
         if forum.last_post == self:
             try:
@@ -239,18 +234,26 @@ class Post(RenderableItem):
             forum.last_post = post
             forum.save()
 
-        if self_id == head_post_id:
-            self.topic.delete()
-        elif self_id == last_post_id:
-            self.topic.last_post = last_posts[-1]
+        # Change `last_post` of the topic which the deleted post belongs to
+        # This needs to avaid whole topic deletion due to ForeignKey dependency
+        if self.topic.last_post == self:
+            try:
+                post = Post.objects.filter(topic=self.topic).exclude(pk=self.pk).order_by('-created')[0]
+            except IndexError:
+                post = None
+            self.topic.last_post = post
             self.topic.save()
-            self.topic.forum.last_post = self.topic.last_post
-            self.topic.forum.save()
-            super(Post, self).delete(*args, **kwargs)
-        else:
-            super(Post, self).delete(*args, **kwargs)
+        
+            # If there is no more posts in topic then
+            # delete the topic
+            if self.topic.last_post is None:
+                self.topic.delete()
 
-        self.topic.update_post_count()
+        super(Post, self).delete(*args, **kwargs)
+
+        if self.topic.pk:
+            # If topic was not deleted
+            self.topic.update_post_count()
         self.topic.forum.update_post_count()
 
 
