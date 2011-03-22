@@ -1,7 +1,6 @@
 from datetime import datetime
 import os.path
 import random
-from BeautifulSoup import BeautifulSoup
 import traceback
 try:
 	from hashlib import md5
