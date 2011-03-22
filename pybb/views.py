@@ -24,7 +24,7 @@ from common.orm import load_related
 from common.pagination import paginate
 
 from pybb.markups import mypostmarkup
-from pybb.util import quote_text, set_language, urlize
+from pybb.util import quote_text, set_language
 from pybb.models import Category, Forum, Topic, Post, Profile, \
                         Attachment, MARKUP_CHOICES
 from pybb.forms import  AddPostForm, EditPostForm, EditHeadPostForm, \

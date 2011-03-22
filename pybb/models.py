@@ -19,9 +19,10 @@ from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.template.defaultfilters import urlize
 
 from pybb.markups import mypostmarkup
-from pybb.util import urlize, unescape
+from pybb.util import unescape
 
 from common.fields import JSONField
 
