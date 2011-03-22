@@ -1,65 +1,10 @@
-What is PYBB?
-=============
+PyBB - is Django application which implements forum function, i.e., 
+it allows users of your site to create discussion threads also known as topics.
 
-The main point in development of pybb is to build it so it could be
-*easily* integrated to existing django based site. This mean:
+PyBB is quite unstable. If some feture exists in rev.A then it could be
+dropped in rev.B.
 
-* pybb does not provide features like user registration, password restoring.
-  It does not provide authentication page. You should use your favorite
-  application for such things. You can try well known django-registration
-  http://code.google.com/p/django-registration/ or my own implementation
-  http://hg.pydev.ru/django-account. Both applications contain install instruction
-  in the distributive. The demo site http://pybb.org use django-account.
+Current implementation does not have templates. You can find working set
+of templates here: https://bitbucket.org/lorien/pep8/src/dddba1eb4931/templates/pybb/
 
-* all pybb stuff placed in one application which is called pybb
-
-* I'm trying to stay with KISS principle. At least in the beginning of pybb
-  development. I mean that there are no threaded posts and there is only bbcode
-  markup support and there is no multi-level nested categories.
-
-  
-Dependencies
-============
-
-* BeautifulSoup
-* python-markdown
-* simplejson
-* pytils (optional, need for russian language support)
-* south (optional) - required for migrations
-
-
-How to install PYBB?
-====================
-
-* Firstly you have to install pybb. You have two ways:
-  * Install pybb with easy_install or pip tools
-  * Clone pybb repository from http://bitbucket.org/lorien/pybb and place it in your project
-
-* Put `pybb` into settings.INSTALLED_APPS
-* Run `python manage.py pybb_install` or do following steps manually:
-  * Find the static directory in the pybb source and copy or symlink static/pybb to %MEDIA_ROOT%/pybb
-  * Create %MEDIA_ROOT%/pybb/avatars directory and chmod it (if that required)
-
-* Put `include('pybb.urls'))` into main project urls.py file
-* Do `python manage.py syncdb`
-* And do not forget to install some authentication application like django-registration or django-account. See info in the bottom of README
-
-
-i18n support
-============
-PYBB support only english and russian translations now.
-You should enable django.middleware.locale.LocaleMiddleware to activate
-django locale autodetecting.
-
-
-How to glue PYBB with account application?
-==========================================
-* For registration, login, logout links PYBB uses reverse and url template tag
-  with names same to django-registration application. Django-account uses the same
-  names too. This mean that if you want use one of these two application then
-  all you need is to correctly install one.
-* If you account application use specific url names or don't use them at all then
-  you have two ways:
-  * edit PYBB sources and write correct urls
-  * add required url names to account application urlpatterns
-??? * Don't forget to write valid LOGIN_URL to the settings
+Send all questions to lorien@lorien.name

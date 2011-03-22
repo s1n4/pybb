@@ -228,6 +228,14 @@ class Post(RenderableItem):
         last_posts = list(self.topic.posts.order_by('-created')[:2])
         last_post_id = self.topic.get_last_post().id
 
+        # Change `last_post` of the forum which the deleted post belongs to
+        # This needs to avaid forum deletion
+        forum = self.topic.forum
+        if forum.last_post == self:
+            post = Post.objects.filter(topic__forum=forum).exclude(pk=self.pk).order_by('-created')[0]
+            forum.last_post = post
+            forum.save()
+
         if self_id == head_post_id:
             self.topic.delete()
         elif self_id == last_post_id:
