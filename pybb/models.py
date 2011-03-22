@@ -232,7 +232,10 @@ class Post(RenderableItem):
         # This needs to avaid forum deletion
         forum = self.topic.forum
         if forum.last_post == self:
-            post = Post.objects.filter(topic__forum=forum).exclude(pk=self.pk).order_by('-created')[0]
+            try:
+                post = Post.objects.filter(topic__forum=forum).exclude(pk=self.pk).order_by('-created')[0]
+            except IndexError:
+                post = None
             forum.last_post = post
             forum.save()
 
