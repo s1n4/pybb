@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import time as time
 try:
     import pytils
@@ -62,6 +62,9 @@ class PybbTimeNode(template.Node):
 
     def render(self, context):
         context_time = self.time.resolve(context)
+        if isinstance(context_time, date):
+            # Convert date to datetime
+            context_time = datetime(*context_time.timetuple()[:6])
 
         delta = datetime.now() - context_time
         today = datetime.now().replace(hour=0, minute=0, second=0)
