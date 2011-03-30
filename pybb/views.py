@@ -18,6 +18,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import connection
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import urlize
 
 from common.decorators import render_to, ajax
 from common.orm import load_related

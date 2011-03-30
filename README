@@ -8,3 +8,5 @@ Current implementation does not have templates. You can find working set
 of templates here: https://bitbucket.org/lorien/pep8/src/dddba1eb4931/templates/pybb/
 
 Send all questions to lorien@lorien.name
+
+NB: Use version from bitbucket, tarball on pypi is not up to date.
