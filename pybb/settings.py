@@ -1,3 +1,6 @@
+# Copyright: 2011, Grigoriy Petukhov
+# Author: Grigoriy Petukhov (http://lorien.name)
+# License: BSD
 from os.path import join
 
 PYBB_TOPIC_PAGE_SIZE = 10

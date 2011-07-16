@@ -40,7 +40,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'PyBB'
-copyright = u'2009, Grigoriy Petukhov'
+copyright = u'2009-2011, Grigoriy Petukhov'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

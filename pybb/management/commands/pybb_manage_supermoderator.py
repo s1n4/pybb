@@ -1,3 +1,6 @@
+# Copyright: 2011, Grigoriy Petukhov
+# Author: Grigoriy Petukhov (http://lorien.name)
+# License: BSD
 from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
