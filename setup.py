@@ -2,42 +2,18 @@
 # Author: Grigoriy Petukhov (http://lorien.name)
 # License: BSD
 import os
-from setuptools import setup
-
-# Compile the list of packages available, because distutils doesn't have
-# an easy way to do this.
-
-packages, data_files = [], []
-root_dir = os.path.dirname(__file__)
-if root_dir:
-    os.chdir(root_dir)
-
-PACKAGE = 'pybb'
-
-for dirpath, dirnames, filenames in os.walk(PACKAGE):
-    for i, dirname in enumerate(dirnames):
-        if dirname in ['.', '..']:
-            del dirnames[i]
-    if '__init__.py' in filenames:
-        pkg = dirpath.replace(os.path.sep, '.')
-        if os.path.altsep:
-            pkg = pkg.replace(os.path.altsep, '.')
-        packages.append(pkg)
-    elif filenames:
-        prefix = dirpath[len(PACKAGE) + 1:] # Strip package directory + path separator
-        for f in filenames:
-            data_files.append(os.path.join(prefix, f))
+from setuptools import setup, find_packages
 
 setup(
+    name = 'pybb',
     version = '0.1.9',
     description = 'Django forum application',
     author = 'Grigoriy Petukhov',
     author_email = 'lorien@lorien.name',
     url = 'http://pybb.org',
-    name = 'pybb',
 
-    packages = packages,
-    package_data = {'pybb': data_files},
+    packages = find_packages(),
+    include_package_data = True,
 
     license = "BSD",
     keywords = "django application forum board",

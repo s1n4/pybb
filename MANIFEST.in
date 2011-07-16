@@ -1,2 +1,2 @@
-recursive-include pybb *
-global-exclude *.pyc
+recursive-include pybb/templates *.html *.txt
+recursive-include pybb/static *
