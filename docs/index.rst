@@ -18,9 +18,9 @@ Installation
   * Add ``pybb`` to ``INSTALLED_APPS``
   * Add ``from pybb.settings import *`` line
   * Add ``pybb.middleware.PybbMiddleware`` to ``MIDDLEWARE_CLASSES``
-    * Add ``url('^forum/', include('pybb.urls'))`` to ``urls.py`` file
-    * Run command ``manage.py migrate`` if you installed `south <http://south.aeracode.org>`_ (recommended) or ``./manage.py syncdb`` (if south is not installed)
-    * Symlink or copy pybb static files to "%MEDIA_ROOT%/pybb"
+* Add ``url('^forum/', include('pybb.urls'))`` to ``urls.py`` file
+* Run command ``manage.py migrate`` if you installed `south <http://south.aeracode.org>`_ (recommended) or ``./manage.py syncdb`` (if south is not installed)
+* Symlink or copy pybb static files to "%MEDIA_ROOT%/pybb"
 
 
 Dependencies

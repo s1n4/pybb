@@ -70,7 +70,7 @@ def gravatar_url(email):
     hostname = Site.objects.get_current().domain
     if not url.startswith('http://'):
         url = 'http://%s%s%s' % (hostname,
-                                 settings.MEDIA_URL,
+                                 settings.STATIC_URL,
                                  settings.PYBB_DEFAULT_AVATAR_URL)
     default = urllib.quote(url)
     url = 'http://www.gravatar.com/avatar/%s?s=%d&d=%s' % (hash, size, default)

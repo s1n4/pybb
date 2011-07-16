@@ -22,3 +22,4 @@ PYBB_SKIN = 'default'
 
 PYBB_ATTACHMENT_UPLOAD_TO = join('pybb_upload', 'attachments')
 PYBB_DEFAULT_AVATAR_URL = 'pybb/img/anonymous.gif'
+PYBB_REBUILD_PRIMARY_PERIOD = 600

@@ -1,0 +1,9 @@
+django
+django-common
+markdown
+pytils
+south
+#pybb
+-e hg+http://bitbucket.org/lorien/pybb#egg=pybb
+django-account
+django-urlauth

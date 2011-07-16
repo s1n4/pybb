@@ -91,11 +91,6 @@ class Forum(models.Model):
     def __unicode__(self):
         return self.name
 
-    def update_post_count(self):
-        self.post_count = Topic.objects.filter(forum=self).aggregate(
-                                Sum("post_count"))['post_count__sum'] or 0
-        self.save()
-
     def get_absolute_url(self):
         return reverse('pybb_forum_details', args=[self.id])
 
@@ -144,13 +139,9 @@ class Topic(models.Model):
         return reverse('pybb_topic_details', args=[self.id])
 
     def save(self, *args, **kwargs):
-        if self.id is None:
+        if self.pk is None:
             self.created = datetime.now()
         super(Topic, self).save(*args, **kwargs)
-
-    def update_post_count(self):
-        self.post_count = self.posts.count()
-        self.save()
 
 
 class RenderableItem(models.Model):
@@ -208,24 +199,14 @@ class Post(RenderableItem):
             self.created = now
         self.render()
 
-        new = self.pk is None
-
         super(Post, self).save(*args, **kwargs)
-
-        if new:
-            self.topic.updated = now
-            self.topic.last_post = self
-            self.topic.update_post_count()
-            self.topic.forum.updated = now
-            self.topic.forum.last_post = self
-            self.topic.forum.update_post_count()
 
     def get_absolute_url(self):
         return reverse('pybb_post_details', args=[self.id])
 
     def delete(self, *args, **kwargs):
         # Change `last_post` of the forum which the deleted post belongs to
-        # This needs to avaid whole forum deletion due to ForeignKey dependency
+        # This needs to avoid whole forum deletion due to ForeignKey dependency
         forum = self.topic.forum
         if forum.last_post == self:
             try:
@@ -252,10 +233,10 @@ class Post(RenderableItem):
 
         super(Post, self).delete(*args, **kwargs)
 
-        if self.topic.pk:
-            # If topic was not deleted
-            self.topic.update_post_count()
-        self.topic.forum.update_post_count()
+        #if self.topic.pk:
+            ## If topic was not deleted
+            #self.topic.update_post_count()
+        #self.topic.forum.update_post_count()
 
 
 BAN_STATUS = (
