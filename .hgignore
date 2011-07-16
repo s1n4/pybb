@@ -10,8 +10,3 @@ dist/
 
 # Sphinx
 docs/_build/
-
-# Demo
-demo/.env
-demo/var/db
-demo/static/static

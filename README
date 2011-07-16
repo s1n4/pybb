@@ -18,20 +18,11 @@ Most recent version is on bitbucket. Package on pypi.python.org
 is updated from time to time.
 
 
-How to install demo
-===================
+PyBB Demo
+=========
 
-There is a demo project in the demo directory.
-
-To install it do:
-* cd demo
-* ./buildenv.sh # that creates virtualenv and install dependencies
-* ./manage.py syncdb --migrate
-* ./generate.py # that creates random data
-* ./manage.py runserver
-
-Note that in this demo django-account is used for login/signup. But
-in your project you can use any login/signup application.
+Quick way to test pybb is to install pybb-demo_ project.
+It is preconfigured django project which you can setup and run in five minuetes.
 
 
 Templates
@@ -39,4 +30,6 @@ Templates
 
 PyBB is shipped with default templates which you can use as basis for
 development your own templates. PyBB is not shipped with any stylesheets,
-you can find some CSS in demo project.
+you can find some CSS in pybb-demo_ project.
+
+.. _pybb-demo: http://bitbucket.org/lorien/pybb-demo
