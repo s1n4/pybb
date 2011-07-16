@@ -3,6 +3,7 @@ syntax: glob
 *.pyc
 *.swp
 *.swo
+*.orig
 
 # Distutils
 pybb.egg-info/
