@@ -33,3 +33,9 @@ development your own templates. PyBB is not shipped with any stylesheets,
 you can find some CSS in pybb-demo_ project.
 
 .. _pybb-demo: http://bitbucket.org/lorien/pybb-demo
+
+
+Tests
+=====
+
+To run tests you need django-webtest and lxml packages to be installed

@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'pybb',
-    version = '0.1.9',
+    version = '0.1.10',
     description = 'Django forum application',
     long_description = open('README').read(),
     author = 'Grigoriy Petukhov',
