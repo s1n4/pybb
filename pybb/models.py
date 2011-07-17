@@ -210,10 +210,31 @@ class Post(RenderableItem):
         return reverse('pybb_post_details', args=[self.id])
 
     def delete(self, *args, **kwargs):
-        # Delete topic if its contains
-        # only the current post
-        if self.topic.posts.count() == 1:
-            self.topic.delete()
+        # Change `last_post` of the forum which the deleted post belongs to
+        forum = self.topic.forum
+        if forum.last_post == self:
+            try:
+                post = Post.objects.filter(topic__forum=forum).exclude(pk=self.pk).order_by('-created')[0]
+            except IndexError:
+                post = None
+            forum.last_post = post
+            forum.save()
+
+        # Change `last_post` of the topic which the deleted post belongs to
+        # This needs to avaid whole topic deletion due to ForeignKey dependency
+        if self.topic.last_post == self:
+            try:
+                post = Post.objects.filter(topic=self.topic).exclude(pk=self.pk).order_by('-created')[0]
+            except IndexError:
+                post = None
+            self.topic.last_post = post
+            self.topic.save()
+        
+            # If there is no more posts in topic then
+            # delete the topic
+            if self.topic.last_post is None:
+                self.topic.delete()
+
         super(Post, self).delete(*args, **kwargs)
 
 
