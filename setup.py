@@ -15,6 +15,7 @@ setup(
 
     packages = find_packages(),
     include_package_data = True,
+    install_requires = ['django-common', 'markdown', 'pytils', 'south'],
 
     license = "BSD",
     keywords = "django application forum board",
