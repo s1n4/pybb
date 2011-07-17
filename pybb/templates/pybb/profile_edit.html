@@ -6,6 +6,7 @@
 <h1>{% trans "Profile editing" %}</h1>
 <img src="{{ profile.user|pybb_avatar_url }}" />
 <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <fieldset>
         <legend>{% trans "Profile editing" %}</legend>
         {{ form.as_p }}
