@@ -25,6 +25,12 @@ class PybbBaseTest(WebTest):
         self.post = Post.objects.create(topic=self.topic, user=self.user, markup='bbcode',
                                         body='[b]Hello world![/b]')
 
+
+class PybbUnitTest(PybbBaseTest):
+    def test_automatic_profile_creation(self):
+        profile = Profile.objects.get()
+        self.assertEqual(self.user.pybb_profile, profile)
+
     def test_post_deletion(self):
         post = Post.objects.create(topic=self.topic, user=self.user, body='xyz',
                                    markup='bbcode')
@@ -70,12 +76,6 @@ class PybbBaseTest(WebTest):
         forum = Forum.objects.get(pk=self.forum.pk)
         self.assertEqual(topic.updated, post.created)
         self.assertEqual(forum.updated, post.created)
-
-
-class PybbUnitTest(PybbBaseTest):
-    def test_automatic_profile_creation(self):
-        profile = Profile.objects.get()
-        self.assertEqual(self.user.pybb_profile, profile)
 
 
 class PybbIntegrationTest(PybbBaseTest):
