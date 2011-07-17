@@ -83,7 +83,7 @@ class Forum(models.Model):
     updated = models.DateTimeField(_('Updated'), blank=True, null=True)
     post_count = models.IntegerField(_('Post count'), blank=True, default=0)
     topic_count = models.IntegerField(_('Topic count'), blank=True, default=0)
-    last_post = models.ForeignKey("Post", related_name='last_post_in_forum', verbose_name=_(u"last post"), blank=True, null=True)
+    last_post = models.ForeignKey("Post", related_name='last_post_in_forum', verbose_name=_(u"last post"), blank=True, null=True, on_delete=models.SET_NULL)
     slug = models.CharField(max_length=30, db_index=True, blank=True)
 
     class Meta:
@@ -102,6 +102,7 @@ class Forum(models.Model):
         return Post.objects.filter(topic__forum=self).select_related()
 
     def get_last_post(self):
+        # TODO: remove
         try:
             return self.posts.order_by('-created').select_related()[0]
         except IndexError:
@@ -119,7 +120,7 @@ class Topic(models.Model):
     closed = models.BooleanField(_('Closed'), blank=True, default=False)
     subscribers = models.ManyToManyField(User, related_name='subscriptions', verbose_name=_('Subscribers'), blank=True)
     post_count = models.IntegerField(_('Post count'), blank=True, default=0)
-    last_post = models.ForeignKey("Post", related_name="last_post_in_topic", verbose_name=_(u"last post"), blank=True, null=True)
+    last_post = models.ForeignKey("Post", related_name="last_post_in_topic", verbose_name=_(u"last post"), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['-created']
@@ -136,6 +137,7 @@ class Topic(models.Model):
         return self._head
 
     def get_last_post(self):
+        # TODO: remove
         return self.posts.order_by('-created').select_related()[0]
 
     def get_absolute_url(self):
@@ -208,38 +210,11 @@ class Post(RenderableItem):
         return reverse('pybb_post_details', args=[self.id])
 
     def delete(self, *args, **kwargs):
-        # Change `last_post` of the forum which the deleted post belongs to
-        # This needs to avoid whole forum deletion due to ForeignKey dependency
-        forum = self.topic.forum
-        if forum.last_post == self:
-            try:
-                post = Post.objects.filter(topic__forum=forum).exclude(pk=self.pk).order_by('-created')[0]
-            except IndexError:
-                post = None
-            forum.last_post = post
-            forum.save()
-
-        # Change `last_post` of the topic which the deleted post belongs to
-        # This needs to avaid whole topic deletion due to ForeignKey dependency
-        if self.topic.last_post == self:
-            try:
-                post = Post.objects.filter(topic=self.topic).exclude(pk=self.pk).order_by('-created')[0]
-            except IndexError:
-                post = None
-            self.topic.last_post = post
-            self.topic.save()
-        
-            # If there is no more posts in topic then
-            # delete the topic
-            if self.topic.last_post is None:
-                self.topic.delete()
-
+        # Delete topic if its contains
+        # only the current post
+        if self.topic.posts.count() == 1:
+            self.topic.delete()
         super(Post, self).delete(*args, **kwargs)
-
-        #if self.topic.pk:
-            ## If topic was not deleted
-            #self.topic.update_post_count()
-        #self.topic.forum.update_post_count()
 
 
 BAN_STATUS = (
