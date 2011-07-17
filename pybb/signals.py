@@ -15,15 +15,13 @@ def post_saved(instance, created, **kwargs):
     if created:
         notify_topic_subscribers(instance)
 
-        now = datetime.now()
-
-        instance.topic.updated = now
+        instance.topic.updated = instance.created
         instance.topic.last_post = instance
         instance.topic.post_count += 1
         instance.topic.save()
 
         forum = instance.topic.forum
-        forum.updated = now
+        forum.updated = instance.created
         forum.last_post = instance
         forum.post_count += 1
         forum.save()
