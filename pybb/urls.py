@@ -2,6 +2,7 @@
 # Author: Grigoriy Petukhov (http://lorien.name)
 # License: BSD
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 from pybb import views
 from pybb import feeds
@@ -60,3 +61,8 @@ urlpatterns += patterns('pybb.views',
     # API
     url('^api/post_ajax_preview/$', 'post_ajax_preview', name='pybb_post_ajax_preview'),
 )
+
+if settings.PYBB_SEARCH_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^search/$', 'pybb.views.post_search', name='pybb_post_search'),
+    )

@@ -442,3 +442,16 @@ def post_ajax_preview(request):
 
     return {'content': html,
             }
+
+
+if settings.PYBB_SEARCH_ENABLED:
+    from haystack.forms import SearchForm
+    from haystack.query import SearchQuerySet
+    from haystack.views import basic_search
+
+    def post_search(request):
+        qs = SearchQuerySet().models(Post)
+        return basic_search(request,
+                            template='pybb/search.html',
+                            form_class=SearchForm,
+                            searchqueryset=qs)

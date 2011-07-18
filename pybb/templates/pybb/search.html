@@ -1,0 +1,49 @@
+{% extends 'pybb/base.html' %}
+{% load pybb_tags %}
+{% load i18n %}
+
+{% block pybb_title %}Search{% endblock %}
+
+{% block pybb_crumbs %}
+<a href="">Начало</a> &raquo;
+<a href="{% url pybb_index %}">Forum</a> &raquo;
+Search
+{% endblock %}
+
+{% block pybb_content %}
+<form method="get" action="{% url pybb_post_search %}">
+    <input type="text" name="q" class="query" />
+    <input type="submit" />
+</form>
+
+<div>
+{% if page.object_list %}
+    <ul class="post-list">
+    {% for item in page.object_list %}
+        {% with item.object as post %}
+        {% with post.topic as topic %}
+        <li class="">
+            {% include "pybb/_post_row.html" %}
+        </li>
+        {% endwith %}
+        {% endwith %}
+        {% empty %}
+        <li>Nothing found</li>
+    {% endfor %}
+    </ul>
+
+    {% if page.has_previous or page.has_next %}
+    <div class="pagination">
+        Страницы поиска:
+        <div>
+            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+            |
+            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% else %}
+<p>Please, enter search query.</p>
+{% endif %}
+</div>
+{% endblock %}

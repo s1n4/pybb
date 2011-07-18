@@ -30,6 +30,7 @@ Dependencies
 * markdown
 * pytils (optional)
 * south (optional)
+* django-haystack (required for search, optional)
 
 
 Feature list
@@ -46,6 +47,7 @@ Feature list
 * i18n
 * File attachments to the post
 * AJAX preview of new post content
+* Search
 
 .. toctree::
     :maxdepth: 1
