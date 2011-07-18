@@ -452,6 +452,6 @@ if settings.PYBB_SEARCH_ENABLED:
     def post_search(request):
         qs = SearchQuerySet().models(Post)
         return basic_search(request,
-                            template='pybb/search.html',
+                            template='pybb/post_search.html',
                             form_class=SearchForm,
                             searchqueryset=qs)

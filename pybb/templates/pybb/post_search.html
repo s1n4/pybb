@@ -1,0 +1,108 @@
+{% extends 'pybb/base.html' %}
+{% load i18n pybb_tags %}
+
+{% block pybb_title %}{% trans "Search" %}{% endblock %}
+
+{% block pybb_crumbs %}
+<a href="/">{% trans "Home" %}</a> &raquo;
+<a href="{% url pybb_index %}">{% trans "Forum" %}</a> &raquo;
+{% trans "Search" %}
+{% endblock %}
+
+{% block pybb_content %}
+
+<form method="get" action="{% url pybb_post_search %}" class="serch-form">
+    <input type="text" name="q" class="query" value="{{ query }}" />
+    <input type="submit" value="{% trans "Search" %}" />
+</form>
+
+<h2>
+    {% trans "Search results for" %} {{ query }}
+</h2>
+
+<div>
+{% if page.object_list %}
+    <div>Number of results: {{ paginator.count }}</div>
+    <br/>
+    <ul class="post-list">
+    {% for item in page.object_list %}
+        {% with item.object as post %}
+        {% with post.topic as topic %}
+        <li class="">
+            <div class="post-details post-{% cycle 'odd' 'even' %}" id="post-{{ post.id }}">
+                <a name="post-{{ post.id }}"></a>
+                <div class="info">
+                    <div class="inner">
+                        <div class="avatar">
+                            <a href="{{ post.user.pybb_profile.get_absolute_url }}">
+                            <img src="{{ post.user|pybb_avatar_url }}" alt="" />
+                            </a>
+                        </div>
+                        <div class="author">{{ post.user|pybb_profile_link }}</div>
+                        {% if user.is_superuser %}
+                            <div class="updated">{{ post.user_ip }}</div>
+                        {% endif %}
+                        <div class="bottom">
+                            <a class="permalink" href="{{ post.get_absolute_url }}">#</a>
+                            <span class="updated">{% pybb_time post.created %}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="inner">
+                        <!-- Post's content -->
+                        {% pybb_render_post post %}
+
+                        <!-- Last modification date -->
+                        {% if post.updated %}
+                        <div class="update-date">{% trans "Edited" %} {% pybb_time post.updated %}</div>
+                        {% endif %}
+
+                        <!-- Attachments -->
+                        {% if post.attachment_cache %}
+                        {% for attach in post.attachment_cache %}
+                        <br/>
+                        {% trans "Attachment" %}: <a href="{{ attach.get_absolute_url }}">{{ attach.name }}</a> ({{ attach.size_display }})
+                        {% endfor %}
+                        {% endif %}
+
+                        <!-- Signature -->
+                        {% if not user.is_authenticated or user.pybb_profile.show_signatures %}
+                        {% if post.user.pybb_profile.signature %}
+                        <div class="signature">
+                            <hr/>
+                            {{ post.user.pybb_profile.signature_html|safe }}
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        <div class="post-related">
+                            <a href="{{ post.get_absolute_url }}">{% trans "Go to topic" %}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </li>
+        {% endwith %}
+        {% endwith %}
+        {% empty %}
+        <li>Nothing found</li>
+    {% endfor %}
+    </ul>
+
+    {% if page.has_previous or page.has_next %}
+    <div class="pagination">
+        {% trans "Pages" %}:
+        <div>
+            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; {% trans "Previous" %}{% if page.has_previous %}</a>{% endif %}
+            |
+            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}{% trans "Next" %} &raquo;{% if page.has_next %}</a>{% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% else %}
+<p>Please, enter search query.</p>
+{% endif %}
+</div>
+{% endblock %}

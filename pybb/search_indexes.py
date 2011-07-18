@@ -12,7 +12,7 @@ class PostIndex(indexes.SearchIndex):
         return 'updated'
 
     def prepare_text(self, obj):
-        return obj.body_text
+        return ''.join((obj.body_text, obj.topic.name))
 
 
 haystack.site.register(Post, PostIndex)
