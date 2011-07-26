@@ -21,6 +21,8 @@ Installation
 * Add ``url('^forum/', include('pybb.urls'))`` to ``urls.py`` file
 * Run command ``manage.py migrate`` if you installed `south <http://south.aeracode.org>`_ (recommended) or ``./manage.py syncdb`` (if south is not installed)
 * Symlink or copy pybb static files to "%MEDIA_ROOT%/pybb"
+* Run command ``manage.py pybb_created_related_objects`` It will create Profile objects for each existing
+  user.
 
 
 Dependencies
