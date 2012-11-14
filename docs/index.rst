@@ -7,49 +7,7 @@ PyBB - Django Forum Application
 ===============================
 
 Oficial repository: http://bitbucket.org/lorien/pybb
-Author's email: lorien@lorien.name
-
-Installation
-============
-
-* Install all dependencies and configure it.
-* Edit settings.py
-
-  * Add ``pybb`` to ``INSTALLED_APPS``
-  * Add ``from pybb.settings import *`` line
-  * Add ``pybb.middleware.PybbMiddleware`` to ``MIDDLEWARE_CLASSES``
-* Add ``url('^forum/', include('pybb.urls'))`` to ``urls.py`` file
-* Run command ``manage.py migrate`` if you installed `south <http://south.aeracode.org>`_ (recommended) or ``./manage.py syncdb`` (if south is not installed)
-* Symlink or copy pybb static files to "%MEDIA_ROOT%/pybb"
-* Run command ``manage.py pybb_created_related_objects`` It will create Profile objects for each existing
-  user.
-
-
-Dependencies
-============
-
-* django-common
-* markdown
-* pytils (optional)
-* south (optional)
-* django-haystack (required for search, optional)
-
-
-Feature list
-============
-
-* Each category, forum, topic and post has its own permanent url
-* BBcode and markdown support
-* Simple moderator system
-* Email subscription on topic replies
-* Topic could be sticked or closed
-* Plain text urls are converted to active links
-* Each user has profile with individual forum related settings
-* Unread topics are marked
-* i18n
-* File attachments to the post
-* AJAX preview of new post content
-* Search
+Email support: lorien@lorien.name
 
 .. toctree::
     :maxdepth: 1

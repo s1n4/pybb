@@ -2,14 +2,13 @@
 PyBB - Python Bulletin Board
 ============================
 
-Pybb is a django forum application. For now PyBB is unstable.
-If some feture exists in rev.A then it could be dropped in rev.B.
+Pybb is a simple django forum application.
 
 
 Contacts
 ========
 
-Send all questions to lorien@lorien.name
+Email: lorien@lorien.name
 
 
 Documentation
@@ -18,30 +17,7 @@ Documentation
 Basic info: http://packages.python.org/pybb/
 
 
-Installation/Download
-=====================
+Installation
+============
 Most recent version is on bitbucket. Package on pypi.python.org
 is updated from time to time.
-
-
-PyBB Demo
-=========
-
-Quick way to test pybb is to install pybb-demo_ project.
-It is preconfigured django project which you can setup and run in five minuetes.
-
-
-Templates
-=========
-
-PyBB is shipped with default templates which you can use as basis for
-development your own templates. PyBB is not shipped with any stylesheets,
-you can find some CSS in pybb-demo_ project.
-
-.. _pybb-demo: http://bitbucket.org/lorien/pybb-demo
-
-
-Tests
-=====
-
-To run tests you need django-webtest and lxml packages to be installed
