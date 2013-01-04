@@ -6,8 +6,8 @@
 PyBB - Django Forum Application
 ===============================
 
-Oficial repository: http://bitbucket.org/lorien/pybb
-Email support: lorien@lorien.name
+Code repository and bug tracker: http://bitbucket.org/lorien/pybb
+Email of main contributor: lorien@lorien.name
 
 .. toctree::
     :maxdepth: 1

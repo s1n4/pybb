@@ -8,7 +8,7 @@ setup(
     name = 'pybb',
     version = '0.1.10',
     description = 'Django forum application',
-    long_description = open('README').read(),
+    long_description = open('README.rst').read(),
     author = 'Grigoriy Petukhov',
     author_email = 'lorien@lorien.name',
     url = 'http://pybb.org',

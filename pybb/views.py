@@ -6,11 +6,22 @@ from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from common.pagination import paginate
 
 from pybb.models import Category, Forum, Topic, Post
 from pybb.forms import PostForm, TopicForm
+
+
+def get_post_form(request, topic):
+    if request.user.is_authenticated():
+        instance = Post(topic=topic, user=request.user)
+        form = PostForm(request.POST or None, instance=instance)
+        return form
+    else:
+        return None
+
 
 def home_page(request):
     cats = Category.objects.order_by('position')
@@ -29,8 +40,10 @@ def forum_page(request, pk):
 def topic_page(request, pk):
     topic = get_object_or_404(Topic, pk=pk)
     posts = Post.objects.filter(topic=topic).order_by('created')
+    post_form = get_post_form(request, topic)
     context = {'topic': topic,
                'posts': posts,
+               'post_form': post_form,
             }
     return render(request, 'pybb/topic_page.html', context)
 
@@ -39,8 +52,7 @@ def topic_page(request, pk):
 def post_add(request):
     topic_id = request.GET.get('topic')
     topic = get_object_or_404(Topic, pk=topic_id)
-    instance = Post(topic=topic, user=request.user)
-    form = PostForm(request.POST or None, instance=instance)
+    form = get_post_form(request, topic)
     if form.is_valid():
         form.save()
         return redirect(topic)
@@ -64,6 +76,7 @@ def topic_add(request):
             user=request.user,
             content=form.cleaned_data['content'],
         )
+        messages.success(request, u'Обсуждение успешно создано')
         return redirect(topic)
     context = {'form': form,
                'forum': forum,

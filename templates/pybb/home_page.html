@@ -1,0 +1,27 @@
+{% extends 'pybb/base.html' %}
+
+{% block pybb_crumbs %}Главная страница{% endblock %}
+
+{% block content %}
+{% for cat in cats %}
+<h3>{{ cat }}</h3>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Форум</th>
+            <th>Тем</th>
+            <th>Сообщений</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for forum in cat.forums.all %}
+        <tr>
+            <td><a href="{{ forum.get_absolute_url }}">{{ forum }}</a></td>
+            <td>{{ forum.topic_count }}</td>
+            <td>{{ forum.post_count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+{% endblock %}

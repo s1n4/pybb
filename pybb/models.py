@@ -32,7 +32,7 @@ class Forum(models.Model):
 
 
 class Topic(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(u'Заголовок темы', max_length=100)
     created = models.DateTimeField(blank=True, default=datetime.now)
     forum = models.ForeignKey('pybb.Forum', related_name='topics')
     post_count = models.IntegerField(blank=True, default=0)
@@ -47,7 +47,7 @@ class Topic(models.Model):
 class Post(models.Model):
     created = models.DateTimeField(blank=True, default=datetime.now)
     topic = models.ForeignKey('pybb.Topic', related_name='posts')
-    content = models.TextField()
+    content = models.TextField(u'Сообщение')
     content_html = models.TextField(blank=True)
     user = models.ForeignKey('auth.User')
 
