@@ -7,4 +7,5 @@ urlpatterns = patterns('pybb.views',
     url(r'^topic/(\d+)$', 'topic_page', name='topic_page'),
     url(r'^post/add$', 'post_add', name='post_add'),
     url(r'^topic/add$', 'topic_add', name='topic_add'),
+    url(r'^topic/(\d+)/delete$', 'topic_delete', name='topic_delete'),
 )

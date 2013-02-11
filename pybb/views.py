@@ -11,7 +11,7 @@ from django.contrib import messages
 from common.pagination import paginate
 
 from pybb.models import Category, Forum, Topic, Post
-from pybb.forms import PostForm, TopicForm
+from pybb.forms import PostForm, TopicForm, TopicDeleteForm
 
 
 def get_post_form(request, topic):
@@ -82,3 +82,22 @@ def topic_add(request):
                'forum': forum,
             }
     return render(request, 'pybb/topic_add.html', context)
+
+
+@login_required
+def topic_delete(request, pk):
+    topic = get_object_or_404(Topic, pk=pk)
+    if not request.user.is_superuser:
+        messages.error(request, u'У вас нет права на удаление темы')
+        return reverse('pybb:home_page')
+    if request.method == 'POST':
+        form = TopicDeleteForm(request.POST)
+    else:
+        form = TopicDeleteForm()
+    if form.is_valid():
+        topic.delete()
+        messages.success(request, u'Тема удалена')
+        return redirect('pybb:home_page')
+    context = {'topic': topic, 'form': form,
+            }
+    return render(request, 'pybb/topic_delete.html', context)

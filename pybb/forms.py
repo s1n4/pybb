@@ -12,3 +12,7 @@ class PostForm(forms.ModelForm):
 class TopicForm(forms.Form):
     name = forms.CharField(label=u'Название темы')
     content = forms.CharField(label=u'Сообщение', widget=forms.Textarea)
+
+
+class TopicDeleteForm(forms.Form):
+    pass
