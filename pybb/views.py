@@ -76,7 +76,7 @@ def topic_add(request):
             user=request.user,
             content=form.cleaned_data['content'],
         )
-        messages.success(request, _(u'Обсуждение успешно создано'))
+        messages.success(request, _('Discussion successfully created'))
         return redirect(topic)
     context = {'form': form,
                'forum': forum,
@@ -88,7 +88,7 @@ def topic_add(request):
 def topic_delete(request, pk):
     topic = get_object_or_404(Topic, pk=pk)
     if not request.user.is_superuser:
-        messages.error(request, _(u'У вас нет права на удаление темы'))
+        messages.error(request, _("You're not allowed to delete topic"))
         return reverse('pybb:home_page')
     if request.method == 'POST':
         form = TopicDeleteForm(request.POST)
@@ -96,7 +96,7 @@ def topic_delete(request, pk):
         form = TopicDeleteForm()
     if form.is_valid():
         topic.delete()
-        messages.success(request, _(u'Тема удалена'))
+        messages.success(request, _('Topic deleted'))
         return redirect('pybb:home_page')
     context = {'topic': topic, 'form': form,
             }
