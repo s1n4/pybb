@@ -9,8 +9,8 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Автор</th>
-            <th>Сообщение</th>
+            <th>Author</th>
+            <th>Message</th>
         </tr>
     </thead>
     <tbody>
@@ -31,11 +31,11 @@
         {% csrf_token %}
         {% include "pybb/form_field.html" with field=post_form.content %}
         <p>
-            <button class="btn">Ответить</button>
+            <button class="btn">Reply</button>
         </a>
     </form>
     {% else %}
-    <a class="btn btn-info" href="{% url pybb:post_add %}?topic={{ topic.pk }}">Ответить</a>
+    <a class="btn btn-info" href="{% url pybb:post_add %}?topic={{ topic.pk }}">Reply</a>
     {% endif %}
 </p>
 {% endblock %}

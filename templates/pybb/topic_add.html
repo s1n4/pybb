@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-<h1>Создание топика в форуме {{ forum }}</h1>
+<h1>Create a topic in the forum {{ forum }}</h1>
 <form method="post">
     {% csrf_token %}
     {% include "pybb/form_field.html" with field=form.name %}
     {% include "pybb/form_field.html" with field=form.content %}
-    <p><input type="submit" value="Написать" /></p>
+    <p><input type="submit" value="Send" class="btn" /></p>
 </form>
 {% endblock %}

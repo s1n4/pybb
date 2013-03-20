@@ -7,9 +7,9 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Тема</th>
-            <th>Создана</th>
-            <th>Сообщений</th>
+            <th>Topic</th>
+            <th>Created at</th>
+            <th>Posts</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +23,6 @@
     </tbody>
 </table>
 <p>
-    <a class="btn btn-info" href="{% url pybb:topic_add %}?forum={{ forum.pk }}">Создать тему</a>
+    <a class="btn btn-info" href="{% url pybb:topic_add %}?forum={{ forum.pk }}">Create a new topic</a>
 </p>
 {% endblock %}
