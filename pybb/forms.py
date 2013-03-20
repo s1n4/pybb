@@ -1,7 +1,8 @@
 # coding: utf-8
 from django import forms
-
+from django.utils.translation import ugettext as _
 from pybb.models import Post
+
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -10,8 +11,8 @@ class PostForm(forms.ModelForm):
 
 
 class TopicForm(forms.Form):
-    name = forms.CharField(label=u'Название темы')
-    content = forms.CharField(label=u'Сообщение', widget=forms.Textarea)
+    name = forms.CharField(label=_(u'Название темы'))
+    content = forms.CharField(label=_(u'Сообщение'), widget=forms.Textarea)
 
 
 class TopicDeleteForm(forms.Form):
